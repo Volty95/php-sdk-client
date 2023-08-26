@@ -149,7 +149,24 @@ foreach($paggination  as $o){
 ```
 
 
-## Creando link de pagos
+## Cobrando con Remesita Payment Link
+
+Generar y usar un link de pagos involucrá:
+
+- Inicialización de la API con apiKey y apiSecret.
+- Autenticación y obtención del token.
+- Creación del link de pagos usando el id de un Negocio registrado bajo tu cuenta.
+- Proceso de pago por parte del usuario.
+- Posibles razones de fallo y redirecciones a las URLs successUrl y cancelUrl.
+- Proceso de IPN y cómo el servidor procesa las notificaciones.
+
+![Diagrama de flujo del proceso de pago usando payment link](payment-link-flow.png)
+
+*Este diagrama ahora refleja la inicialización de la API, la autenticación, la creación del link de pagos, el proceso de pago por parte del usuario, las posibles razones de fallo y las redirecciones a las URLs successUrl y cancelUrl. También se incluye el proceso de IPN y cómo el servidor procesa las notificaciones.*
+
+
+### Implementación
+
 ```php
 $myBusinessUnitId="a365366c-261f-11ed-9ef1-024206050103";
 $concept= "Toma chocolate paga lo que debes";
@@ -159,7 +176,9 @@ $myExternalOrderCartId="MYID123"; //optional
 $payerName="YESAPIN GARCIA"; //optional
 $payerPhone="+17863052277"; //optional
 $payerEmail="yesapin@gmail.com"; //optional
-
+$successUrl="https://miweb.com/checkout/success";
+$cancelUrl="https://miweb.com/checkout/canceled";
+$ipnUrl="https://miweb.com/ipn?id=$myExternalOrderCartId";
 /** 
  * @var Remesita\DTO\PaymentLinkResponse $pl
  */
@@ -168,9 +187,9 @@ $pl=$api->createPaymentLink(
     $amount,
     $concept,
     $myExternalOrderCartId, //optional
-    "https://miweb.com/ipn?id=$myExternalOrderCartId", //optional
-    "https://miweb.com/checkout/success", //optional
-    "https://miweb.com/checkout/canceled", //optional
+    $ipnUrl, //optional
+    $successUrl, //optional
+    $cancelUrl, //optional
     $payerName, //optional
     $payerPhone, //optional
     $payerEmail //optional
@@ -179,15 +198,32 @@ $pl=$api->createPaymentLink(
 echo $pl->link;
 ```
 
-## Manejo de errores
-
-La clase `ApiClient` lanza excepciones en caso de errores. Asegúrate de manejar estas excepciones adecuadamente en tu código.
-
-```php
-try {
-    $response = $remesita->getBusinesses();
-} catch (Exception $e) {
-    echo "Error: " . $e->getMessage();
+### Payload del IPN 
+ ```json
+{
+    "app_id": "el business id",
+    "status": "payed", #payed|completed|canceled|payment_review
+    "payed_at": "2023-08-26 13:33:22",
+    "liquid_at": "2023-08-26 17:34:56",
+    "canceled_at": null,
+    "cancel_reason": "",
+    "custom_id": "",
+    "concept": "Toma chocolate paga lo que debes",
+    "ref": "RM123456",
+    "paymentMethod": "PREPAIDCARDBALANCE",
+    "amount": 1,
+    "recipient_account": "TU TARJETA MAIN",
+    "customer": {
+        "code": "CODIGO DE CIENTE EN REMESITA",
+        "name": "Yesapin Garcia",
+        "phone": "+1786XXXXXXXX",
+        "email": "yesapingueishon@gmail.com",
+        "sex": "FEMALE",
+        "iso": "US",
+        "risk": 30,
+        "profile_picture": "https://remesita.s3.amazonaws.com/uploads/profile-photo.jpeg",
+        "kyc_verified": true
+    }
 }
 ```
 
@@ -195,7 +231,7 @@ try {
 ## Pruebas
 Para ejecutar las pruebas, simplemente usa el comando:
 ```shel
-phpunit RemesitaSDKTest.php 
+phpunit ApiClientTest.php 
 ```
 
 

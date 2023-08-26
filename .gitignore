@@ -1,0 +1,21 @@
+# Archivos y directorios generados por Composer
+/vendor/
+/composer.lock
+
+# Archivos y directorios generados por PHPUnit
+/phpunit.xml
+/.phpunit.result.cache
+
+# Archivos y directorios generados por IDEs y editores
+/.idea/
+*.swp
+*.swo
+*.swn
+*.bak
+*.cache
+*.DS_Store
+*.netrwhist
+
+# Otros archivos y directorios comunes que se deben ignorar
+/.env
+/.env.local

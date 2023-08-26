@@ -207,11 +207,11 @@ echo $pl->link;
     "liquid_at": "2023-08-26 17:34:56",
     "canceled_at": null,
     "cancel_reason": "",
-    "custom_id": "",
+    "custom_id": "MYID123",
     "concept": "Toma chocolate paga lo que debes",
     "ref": "RM123456",
     "paymentMethod": "PREPAIDCARDBALANCE",
-    "amount": 1,
+    "amount": 101.99,
     "recipient_account": "TU TARJETA MAIN",
     "customer": {
         "code": "CODIGO DE CIENTE EN REMESITA",

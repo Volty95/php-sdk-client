@@ -76,78 +76,6 @@ foreach($remesita->getBusinesses()  as $b){
 }
 ```
 
-### Lista de tarjetas
-
-```php
-/** 
- * @var Remesita\DTO\Card $c
- */
-foreach($remesita->getCards()  as $c){
-    echo $b->number;
-    echo $b->balance; 
-}
-```
-
-### Lista de transaccones de una tarjeta
-```php
-  
-$from = new \DateTime("now - 30 days");
-$to = new \DateTime("now");
-$pg=1;
-$pgSize=25;
-$paggination=$remesita->getCardTransactions(
-    $cardNumber,
-    $from,
-    $to,
-    $pg,
-    $pgSize
-);
-
-echo $paggination->total;
-echo $paggination->pg;
-echo $paggination->pgSize;
-if($paggination->allowNext) {
-
-}
-/** 
- * $paggination implementa la interfaz \Iterator
- * @var Remesita\DTO\CardTransaction $c
- */
-foreach($paggination  as $t){
-    echo $t->amount;
-    echo $t->type; //DBT or CRD
-    echo $t->currency; 
-    echo $t->date; 
-    echo $t->memo; 
-    echo $t->exchangeRate; //rate to USD
-}
-```
-
-
-### Lista de ordenes
-```php
-  
-$from = new \DateTime("now - 30 days");
-$to = new \DateTime("now");
-$pg=1;
-$pgSize=25;
-$paggination=$remesita->getOrders( 
-    $from,
-    $to,
-    $pg,
-    $pgSize
-); 
-/** 
- * $paggination implementa la interfaz \Iterator
- * @var Remesita\DTO\Order $o
- */
-foreach($paggination  as $o){
-    echo $o->reference; 
-    echo $o->sku; 
-    echo $o->recipientAmount; 
-}
-```
-
 
 ## Cobrando con Remesita Payment Link
 
@@ -226,6 +154,80 @@ echo $pl->link;
     }
 }
 ```
+
+### Lista de tarjetas
+
+```php
+/** 
+ * @var Remesita\DTO\Card $c
+ */
+foreach($remesita->getCards()  as $c){
+    echo $b->number;
+    echo $b->balance; 
+}
+```
+
+### Lista de transaccones de una tarjeta
+```php
+  
+$from = new \DateTime("now - 30 days");
+$to = new \DateTime("now");
+$pg=1;
+$pgSize=25;
+$paggination=$remesita->getCardTransactions(
+    $cardNumber,
+    $from,
+    $to,
+    $pg,
+    $pgSize
+);
+
+echo $paggination->total;
+echo $paggination->pg;
+echo $paggination->pgSize;
+if($paggination->allowNext) {
+
+}
+/** 
+ * $paggination implementa la interfaz \Iterator
+ * @var Remesita\DTO\CardTransaction $c
+ */
+foreach($paggination  as $t){
+    echo $t->amount;
+    echo $t->type; //DBT or CRD
+    echo $t->currency; 
+    echo $t->date; 
+    echo $t->memo; 
+    echo $t->exchangeRate; //rate to USD
+}
+```
+
+
+### Lista de ordenes
+```php
+  
+$from = new \DateTime("now - 30 days");
+$to = new \DateTime("now");
+$pg=1;
+$pgSize=25;
+$paggination=$remesita->getOrders( 
+    $from,
+    $to,
+    $pg,
+    $pgSize
+); 
+/** 
+ * $paggination implementa la interfaz \Iterator
+ * @var Remesita\DTO\Order $o
+ */
+foreach($paggination  as $o){
+    echo $o->reference; 
+    echo $o->sku; 
+    echo $o->recipientAmount; 
+}
+```
+
+
 
 
 ## Pruebas

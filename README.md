@@ -182,7 +182,7 @@ $ipnUrl="https://miweb.com/ipn?id=$myExternalOrderCartId";
 /** 
  * @var Remesita\DTO\PaymentLinkResponse $pl
  */
-$pl=$api->createPaymentLink(
+$pl=$remesita->createPaymentLink(
     $myBusinessUnitId,
     $amount,
     $concept,

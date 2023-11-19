@@ -17,15 +17,18 @@ use Remesita\DTO\Paggination;
 
 class ApiClient
 {
-    private $baseURL = 'https://remesita.com';
+    private $baseURL = 'https://api.remesita.com';
     private $apiKey;
     private $apiSecret;
     private $token = null;
+    private $token = null;
 
-    public function __construct(string $apiKey, string $apiSecret)
+    public function __construct(string $apiKey, string $apiSecret, $env="prod")
     {
         $this->apiKey = $apiKey;
         $this->apiSecret = $apiSecret;
+        if($env!="prod")
+            $this->baseURL='https://dev-api.remesita.com';
     }
 
     private function auth(): void

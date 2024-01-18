@@ -315,6 +315,7 @@ class ApiClient
      * @param string $businessUnitId The ID of the business unit.
      * @param float $amount The amount for the payment link.
      * @param string|null $concept Optional concept for the payment.
+     * @param array|null $methods Optional force use payment method from a list ex: ["PREPAIDCARDBALANCE","ZELLE","SPEI","BIZUM","IBAN","SEIS","USDT","BITCOIN","PAYPAL"]
      * @param string|null $ipnUrl Optional IPN URL.
      * @param string|null $successUrl Optional success URL.
      * @param string|null $cancelUrl Optional cancel URL.
@@ -329,6 +330,7 @@ class ApiClient
         string $businessUnitId,
         float $amount,
         string $concept,
+        ?array $methods = null,
         ?string $customId = null,
         ?string $ipnUrl = null,
         ?string $successUrl = null,
@@ -341,6 +343,7 @@ class ApiClient
             'businessUnitId' => $businessUnitId,
             'amount' => $amount,
             'concept' => $concept,
+            "methods" => $methods,
             'ipnUrl' => $ipnUrl,
             'successUrl' => $successUrl,
             'cancelUrl' => $cancelUrl,

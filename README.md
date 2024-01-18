@@ -100,6 +100,18 @@ $myBusinessUnitId="a365366c-261f-11ed-9ef1-024206050103";
 $concept= "Toma chocolate paga lo que debes";
 $amount=101.99;
 
+$methods= [
+         # si methods es null se asumen todos los metodos de pago disponibles en la plataforma optimizado por la ubicacion del cliente
+        "PREPAIDCARDBALANCE",
+        "ZELLE",
+        "SPEI",
+        "BIZUM",
+        "IBAN",
+        "SEIS",
+        "USDT",
+        "BITCOIN",
+        "PAYPAL"
+];
 $myExternalOrderCartId="MYID123"; //optional 
 $payerName="YESAPIN GARCIA"; //optional
 $payerPhone="+17863052277"; //optional
@@ -114,6 +126,7 @@ $pl=$remesita->createPaymentLink(
     $myBusinessUnitId,
     $amount,
     $concept,
+    $methods,
     $myExternalOrderCartId, //optional
     $ipnUrl, //optional
     $successUrl, //optional
@@ -138,18 +151,7 @@ echo $pl->link;
     "custom_id": "MYID123",
     "concept": "Toma chocolate paga lo que debes",
     "ref": "RM123456",
-    "methods": [
-         # si methods es null se asumen todos los metodos de pago disponibles en la plataforma optimizado por la ubicacion del cliente
-        "PREPAIDCARDBALANCE",
-        "ZELLE",
-        "SPEI",
-        "BIZUM",
-        "IBAN",
-        "SEIS",
-        "USDT",
-        "BITCOIN",
-        "PAYPAL"
-    ],
+    "payment_method":  "PREPAIDCARDBALANCE" , #metodo de pago seleccionado por el pagador
     "amount": 101.99,
     "recipient_account": "TU TARJETA MAIN",
     "customer": {

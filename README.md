@@ -105,7 +105,7 @@ $payerName="YESAPIN GARCIA"; //optional
 $payerPhone="+17863052277"; //optional
 $payerEmail="yesapin@gmail.com"; //optional
 $successUrl="https://miweb.com/checkout/success";
-$cancelUrl="https://miweb.com/checkout/canceled";
+$cancelUrl="https://miweb.com/checkout/cancelled";
 $ipnUrl="https://miweb.com/ipn?id=$myExternalOrderCartId";
 /** 
  * @var Remesita\DTO\PaymentLinkResponse $pl
@@ -131,9 +131,9 @@ echo $pl->link;
 {
     "app_id": "el business id",
     "status": "paid", #paid|completed|cancelled|payment_review|paused
-    "payed_at": "2023-08-26 13:33:22",
+    "paid_at": "2023-08-26 13:33:22",
     "liquid_at": "2023-08-26 17:34:56",
-    "canceled_at": null,
+    "cancelled_at": null,
     "cancel_reason": "",
     "custom_id": "MYID123",
     "concept": "Toma chocolate paga lo que debes",

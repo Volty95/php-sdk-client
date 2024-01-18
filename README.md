@@ -130,7 +130,7 @@ echo $pl->link;
  ```json
 {
     "app_id": "el business id",
-    "status": "payed", #payed|completed|canceled|payment_review
+    "status": "paid", #paid|completed|cancelled|payment_review|paused
     "payed_at": "2023-08-26 13:33:22",
     "liquid_at": "2023-08-26 17:34:56",
     "canceled_at": null,

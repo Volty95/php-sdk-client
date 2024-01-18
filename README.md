@@ -138,7 +138,17 @@ echo $pl->link;
     "custom_id": "MYID123",
     "concept": "Toma chocolate paga lo que debes",
     "ref": "RM123456",
-    "paymentMethod": "PREPAIDCARDBALANCE",
+    "methods": [
+        "PREPAIDCARDBALANCE",
+        "ZELLE",
+        "SPEI",
+        "BIZUM",
+        "IBAN",
+        "SEIS",
+        "USDT",
+        "BITCOIN",
+        "PAYPAL"
+    ], // si methods es null se asumen todos los metodos de pago disponibles en la plataforma optimizado por la ubicacion del cliente
     "amount": 101.99,
     "recipient_account": "TU TARJETA MAIN",
     "customer": {

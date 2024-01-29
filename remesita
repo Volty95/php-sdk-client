@@ -1,1 +1,40 @@
-kke
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	// procesar mensajes aquí
+	
+	
+	
+	// establecer código de respuesta - 200 éxito http_response_code ( 200 );
+	
+
+	// envía una o varias respuestas a AutoResponder echo json_encode(array ("respuestas" => array (
+		 array ("mensaje" => "Hola " . $ remitente . "!\nGracias por enviar: " . $ mensaje),
+		 array ( "mensaje" => "Éxito ✅")
+	 
+	)));
+	
+	// o esto en su lugar si no hay respuesta:
+	// echo json_encode(array("respuestas" => array()));
+}
+
+// decirle al usuario que los datos json están incompletos else {
+
+	
+	// establece el código de respuesta - 400 solicitud incorrecta http_response_code ( 400 );
+	
+	
+	// enviar error echo json_encode(array ("respuestas" => array (
+		 array ("message" => "Error ❌"),
+		 array ("message" => "Los datos JSON están incompletos. ¿La solicitud fue enviada por AutoResponder?" )
+	 
+	)));
+}
+?>

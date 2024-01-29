@@ -1,40 +1,64 @@
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	// procesar mensajes aquí
-	
-	
-	
-	// establecer código de respuesta - 200 éxito http_response_code ( 200 );
-	
+<?php
 
-	// envía una o varias respuestas a AutoResponder echo json_encode(array ("respuestas" => array (
-		 array ("mensaje" => "Hola " . $ remitente . "!\nGracias por enviar: " . $ mensaje),
-		 array ( "mensaje" => "Éxito ✅")
-	 
-	)));
-	
-	// o esto en su lugar si no hay respuesta:
-	// echo json_encode(array("respuestas" => array()));
-}
+// Credenciales proporcionadas por remesita.com
+$businessUnitId = '57319a53-7f27-11ee-941b-02420a000911';
+$apiKey = 'key10817m5ba1c3c83c7bbfc90sad5aed6d0c6-bmltZXI34564521haWwuY29t';
+$apiSecret = '41a930b5951a065756ewt436dsffbb';
 
-// decirle al usuario que los datos json están incompletos else {
+// Endpoint para autenticación
+$authEndpoint = 'https://api.remesita.com/rest/v1/auth';
 
-	
-	// establece el código de respuesta - 400 solicitud incorrecta http_response_code ( 400 );
-	
-	
-	// enviar error echo json_encode(array ("respuestas" => array (
-		 array ("message" => "Error ❌"),
-		 array ("message" => "Los datos JSON están incompletos. ¿La solicitud fue enviada por AutoResponder?" )
-	 
-	)));
-}
+// Datos para la solicitud de autenticación
+$data = array(
+    'apiKey' => $apiKey,
+    'apiSecret' => $apiSecret
+);
+
+// Inicializar cURL
+$curl = curl_init();
+
+// Configurar opciones de cURL para la solicitud de autenticación
+curl_setopt_array($curl, array(
+    CURLOPT_URL => $authEndpoint,
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_POST => true,
+    CURLOPT_POSTFIELDS => http_build_query($data),
+));
+
+// Ejecutar la solicitud de autenticación
+$response = curl_exec($curl);
+
+// Obtener el token de acceso de la respuesta
+$accessToken = json_decode($response, true)['accessToken'];
+
+// Cerrar la sesión cURL
+curl_close($curl);
+
+// Ahora que tenemos el token de acceso, podemos hacer peticiones a otros endpoints de la API
+// Por ejemplo, aquí hacemos una solicitud GET al endpoint para obtener la lista de tarjetas prepagadas
+
+// Endpoint para obtener la lista de tarjetas prepagadas
+$cardsEndpoint = 'https://api.remesita.com/rest/v1/cards';
+
+// Inicializar otra sesión cURL
+$curl = curl_init();
+
+// Configurar opciones de cURL para la solicitud GET de la lista de tarjetas prepagadas
+curl_setopt_array($curl, array(
+    CURLOPT_URL => $cardsEndpoint,
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_HTTPHEADER => array(
+        'Authorization: Bearer ' . $accessToken // Incluir el token de acceso en la cabecera de autenticación
+    ),
+));
+
+// Ejecutar la solicitud GET de la lista de tarjetas prepagadas
+$response = curl_exec($curl);
+
+// Procesar la respuesta como desees, por ejemplo, imprimir los datos de las tarjetas
+echo $response;
+
+// Cerrar la sesión cURL
+curl_close($curl);
+
 ?>
